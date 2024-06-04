@@ -17,17 +17,18 @@ export class Cashe {
     }
   }
 
-  public async storeCashe(key: string, data: any) {
-    this.client.set(key, data);
+  public async storeCashedData(key: string, data: any) {
+    this.client.setEx(key, 60, data); //1m expiration
     console.log(`${data} with ${key} stored 🚀🚀🚀`);
   }
 
   public async getCashedData(key: string) {
     try {
       const data = await this.client.get(key);
-      console.log(data);
+      return data;
     } catch (error) {
       console.log(`cann't key data for key ${key}`);
+      return null;
     }
   }
 }
